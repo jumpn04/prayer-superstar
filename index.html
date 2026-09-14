@@ -4,11 +4,117 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="theme-color" content="#7B2D12" />
 <title>Prayer Superstar</title>
-<meta http-equiv="refresh" content="0; url=https://raw.githack.com/jumpn04/prayer-superstar/main/prayer-superstar.html" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<p>Opening Prayer Superstar…</p>
+<div id="app">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">🪔</div>
+      <div>
+        <h1>Prayer Superstar</h1>
+        <small>Learn • Play • Shine</small>
+      </div>
+    </div>
+    <div class="star-pill">⭐ <span id="starCount">0</span></div>
+  </header>
+
+  <main>
+    <section id="home" class="screen on">
+      <div class="hero">
+        <h2>Hi, Superstar ✨</h2>
+        <p>22 prayers families already sing. Our own kid words. Fun games. On your phone.</p>
+      </div>
+      <div class="grid2">
+        <button class="tile" onclick="go('learn')">
+          <span class="ico">📖</span><b>Learn</b><span>Flip through prayers</span>
+        </button>
+        <button class="tile" onclick="go('play')">
+          <span class="ico">🎮</span><b>Play</b><span>4 little games</span>
+        </button>
+        <button class="tile" onclick="startQuick()">
+          <span class="ico">⚡</span><b>Quick 5</b><span>A tiny quiz now</span>
+        </button>
+        <button class="tile" onclick="go('stars')">
+          <span class="ico">🏆</span><b>My Stars</b><span>Badges & progress</span>
+        </button>
+      </div>
+      <h3 class="section-title">Today’s path</h3>
+      <div class="progress">
+        <div style="display:flex;justify-content:space-between;font-weight:800">
+          <span>Prayers practiced</span><span id="pracLabel">0 / 22</span>
+        </div>
+        <div class="bar"><i id="pracBar"></i></div>
+        <p style="margin:10px 0 0;font-weight:700;color:#8A5A3B;font-size:13px">Start with 1 • 2 • 3 this week. Tiny steps win.</p>
+      </div>
+      <div class="card" style="margin-top:16px;padding:14px 16px">
+        <b class="baloo">About this page</b>
+        <p class="mean" style="margin:8px 0 0">The lines you say are traditional prayers and home bhajans. The short meanings, games, and “try this” notes were written here for children. This is not a publisher’s book, not a scan, and not for sale.</p>
+      </div>
+    </section>
+
+    <section id="learn" class="screen">
+      <input class="search" id="qsearch" placeholder="Find a prayer…" oninput="filterLearn()" />
+      <div class="plist" id="plist"></div>
+    </section>
+
+    <section id="detail" class="screen">
+      <button class="back" onclick="go('learn')">← All prayers</button>
+      <div class="card" id="detailCard"></div>
+    </section>
+
+    <section id="play" class="screen">
+      <div class="hero" style="background:linear-gradient(160deg,#1F6F6A,#3D7EA6)">
+        <h2>Game time 🎮</h2>
+        <p>Short, tap-tap games. No peeking at answers.</p>
+      </div>
+      <div class="grid2">
+        <button class="tile" onclick="startGame('when')">
+          <span class="ico">⏰</span><b>When?</b><span>Pick the right time</span>
+        </button>
+        <button class="tile" onclick="startGame('blank')">
+          <span class="ico">🧩</span><b>Missing word</b><span>Fill the blank</span>
+        </button>
+        <button class="tile" onclick="startGame('tf')">
+          <span class="ico">✅</span><b>True / False</b><span>Spot the truth</span>
+        </button>
+        <button class="tile" onclick="startGame('match')">
+          <span class="ico">🔗</span><b>Match up</b><span>Name ↔ meaning</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="game" class="screen">
+      <button class="back" onclick="go('play')">← Games</button>
+      <div class="card" id="gameCard"></div>
+    </section>
+
+    <section id="stars" class="screen">
+      <div class="hero">
+        <h2>Star board ⭐</h2>
+        <p>Every right answer and every “I said it” adds a star.</p>
+      </div>
+      <h3 class="section-title">Badges</h3>
+      <div class="badge-row" id="badges"></div>
+      <button class="btn ghost" onclick="resetProgress()" style="margin-top:18px">Reset my stars</button>
+    </section>
+  </main>
+
+  <nav class="tab">
+    <button class="on" data-tab="home" onclick="go('home')"><span class="n">🏠</span>Home</button>
+    <button data-tab="learn" onclick="go('learn')"><span class="n">📖</span>Learn</button>
+    <button data-tab="play" onclick="go('play')"><span class="n">🎮</span>Play</button>
+    <button data-tab="stars" onclick="go('stars')"><span class="n">⭐</span>Stars</button>
+  </nav>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="prayers.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
